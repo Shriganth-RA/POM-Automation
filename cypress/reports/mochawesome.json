@@ -1,0 +1,106 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2025-10-10T03:30:18.665Z",
+    "end": "2025-10-10T03:30:27.240Z",
+    "duration": 8575,
+    "testsRegistered": 1,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "3d4106f4-158d-4127-a3d1-57bc6003f973",
+      "title": "",
+      "fullFile": "cypress\\e2e\\test\\test_summary.cy.js",
+      "file": "cypress\\e2e\\test\\test_summary.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "bbac529b-3665-4f3d-82f6-c1047ad999c6",
+          "title": "Practice automation website",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Home page - Arrivals - Add to basket - Items - Remove book",
+              "fullTitle": "Practice automation website Home page - Arrivals - Add to basket - Items - Remove book",
+              "timedOut": null,
+              "duration": 6727,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_HomePage.default.clickMenu();\n_HomePage.default.clickShop();\n_HomePage.default.verifyUrlContains(\"shop\");\n_HomePage.default.clickHome();\n_HomePage.default.verifyBaseUrl();\n_HomePage.default.isArrivalProductLength(data.arrivalLength);\n_HomePage.default.getProductFromShop();\n_HomePage.default.checkUrlwithProductName();\n// ✅ Chain everything properly\n_ProductPage.default.addProductToCartAndVerifyMenuPrice(3).then(() => {\n  _ProductPage.default.clickCartInMenu(); // Waits properly for previous chain\n  _CartPage.default.removeItemFromCart();\n  _CartPage.default.verifyRemovalmsgFromCart();\n  _CartPage.default.checkIsEmpty();\n});",
+              "err": {
+                "message": "CypressError: `cy.then()` failed because you are mixing up async and sync code.\n\nIn your callback function you invoked 1 or more cy commands but then returned a synchronous value.\n\nCypress commands are asynchronous and it doesn't make sense to queue cy commands and yet return a synchronous value.\n\nYou likely forgot to properly chain the cy commands using another `cy.then()`.\n\nThe value you synchronously returned was: `280`",
+                "estack": "CypressError: `cy.then()` failed because you are mixing up async and sync code.\n\nIn your callback function you invoked 1 or more cy commands but then returned a synchronous value.\n\nCypress commands are asynchronous and it doesn't make sense to queue cy commands and yet return a synchronous value.\n\nYou likely forgot to properly chain the cy commands using another `cy.then()`.\n\nThe value you synchronously returned was: `280`\n    at getRet (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:122069:70)\n    at tryCatcher (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:4285:29)\n    at Context.thenFn (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:122078:66)\n    at Context.then (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:122329:21)\n    at wrapped (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:145489:19)\n    at <unknown> (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:151431:15)\n    at tryCatcher (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromiseCtx (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:1583:10)\n    at _drainQueueStep (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:2381:12)\n    at _drainQueue (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (https://practice.automationtesting.in/__cypress/runner/cypress_runner.js:2256:14)",
+                "diff": null
+              },
+              "uuid": "e3001694-23cc-4655-b473-7ab061f388b1",
+              "parentUUID": "bbac529b-3665-4f3d-82f6-c1047ad999c6",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "e3001694-23cc-4655-b473-7ab061f388b1"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 6727,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports"
+      },
+      "version": "6.3.0"
+    }
+  }
+}
