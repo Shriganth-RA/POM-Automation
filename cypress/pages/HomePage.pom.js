@@ -1,41 +1,55 @@
 class HomePage {
+      clickLogo() {
+            cy.get('.header-bar #site-logo').click();
+      }
+
+
       visit(url) {
             cy.visit(url); // Navigate to URL
       }
+
 
       clickMenu() {
             cy.get('#menu-icon').click({ force: true }); // Click the menu icon
       }
 
+
       clickShop() {
             cy.get('#main-nav-wrap #main-nav li').contains('Shop').click(); // Click "Shop"
       }
+
 
       clickHome() {
             cy.get('.woocommerce-breadcrumb a').contains('Home').click(); // Click "Home"
       }
 
+
       verifyBaseUrl() {
             cy.url().should('eq', 'https://practice.automationtesting.in/'); // Verify homepage
       }
 
+
       verifyUrlContains(partialPath) {
             cy.url().should('include', `/${partialPath}`); // Verify URL contains path
       }
+
 
       isSliderLength(expectedLength) {
             cy.get('.n2-ss-slide-background-image')
                   .should('have.length', expectedLength); // Verify slider count
       }
 
+
       isArrivalProductLength(expectedLength) {
             cy.get('.products .product')
                   .should('have.length', expectedLength); // Verify arrivals count
       }
 
+
       getProductId() {
             cy.get('.products').eq(0).click();
       }
+
 
       getProductFromShop() {
             cy.get('.products').find('li').eq(1).within(() => {
@@ -45,6 +59,7 @@ class HomePage {
                   cy.get('img').click();  // Click the product image
             });
       }
+
 
       checkUrlwithProductName() {
             cy.get('@productName').then((productName) => {

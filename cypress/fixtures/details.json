@@ -4,10 +4,36 @@
   "sliderLength": 3,
 
   "arrivalLength": 3,
-
-  "quantity": 3,
-
+  
   "updateQuantity": 5,
+  
+  "firstName": "Surya",
+
+  "lastName": "R",
+
+  "companyName": "ABC organization",
+
+  "email": "surya30@gmail.com",
+
+  "phone": "6981237530",
+
+  "country": "IN",
+
+  "streetAddress": "123, main road",
+
+  "apartmentName": "XYZ aparatment",
+
+  "town": "Karaikal",
+
+  "state": "Rajasthan",
+
+  "postCode": "609606",
+
+  "orderNotes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+
+  "quantity": "30",
+
+  "password": "surya@2000",
 
   "couponCode": "krishnasakinala"
 }

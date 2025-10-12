@@ -175,7 +175,7 @@ describe('Practice automation website', () => {
                   // Click the place-order button
                   cy.get('#place_order').click({multiple: true});
                   cy.url().should('include', '/order-received');
-                  cy.get('.woocommerce-thankyou-order-received').should('be.visible').and('have.text', 'Thank you. Your order has been received.')
+                  cy.get('.woocommerce-thankyou-order-received').should('be.visible').and('have.text', 'Thank you. Your order has been received.');
 
             });
       });

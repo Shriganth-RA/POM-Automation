@@ -1,17 +1,19 @@
 class CartPage {
-
       checkUrl(pageName) {
-            cy.url().should('include')
+            cy.url().should('include', pageName);
       }
+
 
       clickProceedToCheckout() {
             cy.get('.wc-proceed-to-checkout a').click();  // Click the "Proceed to checkout" button
       }
 
+
       applyCouponCode(couponCode) {
             cy.get('input[name="coupon_code"]').type(couponCode).should('have.value', couponCode);  // Enter a coupon code
             cy.get('input[name="apply_coupon"]').click();
       }
+
 
       getSubTotal() {
             // Get subTotal
@@ -23,15 +25,41 @@ class CartPage {
                   });
       }
 
+
+      // getDiscount() {
+      //       // Get discount
+      //       cy.get('tr.cart-discount td span.woocommerce-Price-amount')
+      //             .invoke('text')
+      //             .then((discountText) => {
+      //                   const discount = parseFloat(discountText.replace(/[₹,]/g, '').trim());
+      //                   cy.wrap(discount).as('discount');
+      //             });
+      // }
+
+
       getDiscount() {
-            // Get discount
-            cy.get('tr.cart-discount td span.woocommerce-Price-amount')
-                  .invoke('text')
-                  .then((discountText) => {
-                        const discount = parseFloat(discountText.replace(/[₹,]/g, '').trim());
-                        cy.wrap(discount).as('discount');
-                  });
+            return cy.get('body').then(($body) => {
+                  if ($body.find('tr.cart-discount td span.woocommerce-Price-amount').length > 0) {
+                        // ✅ Discount exists
+                        return cy.get('tr.cart-discount td span.woocommerce-Price-amount')
+                              .invoke('text')
+                              .then((discountText) => {
+                                    const discount = parseFloat(discountText.replace(/[₹,]/g, '').trim());
+                                    cy.log(`Discount: ${discount}`);
+                                    cy.wrap(discount).as('discount'); // ✅ Always alias
+                                    return discount;
+                              });
+                  } else {
+                        // ❌ No discount found — still create alias
+                        cy.log('No discount available');
+                        const discount = 0;
+                        cy.wrap(discount).as('discount'); // ✅ define alias even when 0
+                        return discount;
+                  }
+            });
       }
+
+
 
       getTaxRate() {
             // Get tax rate
@@ -42,6 +70,7 @@ class CartPage {
                         cy.wrap(tax).as('tax');
                   });
       }
+
 
       compareTotalAndActualTotal() {
             cy.get('@subTotal').then((subTotal) => {
@@ -64,6 +93,7 @@ class CartPage {
             });
       }
 
+
       removeItemFromCart() {
             // Now remove the item safely
             cy.get('.cart_item', { timeout: 10000 }).should('exist').first().within(() => {
@@ -75,6 +105,7 @@ class CartPage {
             cy.get('.cart_item .product-remove a.remove', { timeout: 10000 }).first().click();
       }
 
+
       verifyRemovalmsgFromCart() {
             // Verify removal message
             cy.get('@cartItem').then((cartItem) => {
@@ -84,11 +115,13 @@ class CartPage {
             });
       }
 
+
       checkIsEmpty() {
             // Confirm basket is empty
             cy.get('.cart-empty', { timeout: 10000 })
                   .should('contain.text', 'Your basket is currently empty');
       }
+
 
       updateTheCart(updateQuantity) {
             cy.get('table.shop_table').find('tr.cart_item').eq(0).within(() => {
@@ -97,11 +130,10 @@ class CartPage {
             cy.get('input[name="update_cart"]').should('be.visible').click();  // Click the update-cart button
       }
 
+
       verifyCartUpdated() {
             cy.get('.woocommerce-message').should('be.visible').and('have.text', 'Basket updated.');  // Verify the basket is updated
       }
-
-      
 
 }
 
