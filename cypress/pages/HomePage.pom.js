@@ -67,6 +67,32 @@ class HomePage {
                   cy.url().should('include', `/product/${slug}/`);  // Verify the url
             })
       }
+
+
+      adjustPriceFilter(min_price, max_price) {
+            cy.get('.price_slider_wrapper').find('span').eq(0).invoke('attr', 'style', 'left: 0%;').trigger('change');     // Adjust the left slider button
+            cy.get('.price_slider_wrapper').find('span').eq(1).invoke('attr', 'style', 'left: 85.7143%;').trigger('change');     // Adjust the right slider button
+
+            // Click the Filter button
+            cy.get('.price_slider_amount .button').click();
+
+            // Verify the slider
+            cy.get('.price_label .from').invoke('text').then((from) => {
+                  cy.wrap(from).as('expectedMinPrice');     // Wrap the minimum price
+            });
+            cy.get('.price_label .to').invoke('text').then((to) => {
+                  cy.wrap(to).as('expectedMaxPrice');
+            })
+
+            cy.get('@expectedMinPrice').then((expectPrice) => {
+                  // Log the Expected minimum price
+                  cy.log(`Expected min price: ${expectPrice}`);
+            });
+            cy.get('@expectedMaxPrice').then((expectPrice) => {
+                  // Log the Expected maximum price
+                  cy.log(`Expected max price: ${expectPrice}`);
+            });
+      }
 }
 
 export default new HomePage();
