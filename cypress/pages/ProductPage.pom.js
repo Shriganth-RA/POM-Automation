@@ -124,6 +124,22 @@ class ProductPage {
             cy.get('#main-nav-wrap #main-nav').find('li').eq(5).click();  // Click the icon
       }
 
+
+      clickProduct(productName) {
+            // Click the product link
+            cy.get('ul.products li a h3').contains(productName).click();
+
+            // Check the product
+            cy.get('.summary .product_title').should('have.text', productName);
+      }
+
+
+      popularityFilter(filterName) {
+            // const filter = "Sort by popularity";
+
+            cy.get('select[name="orderby"]').select(filterName);
+      }
+
 }
 
 export default new ProductPage;

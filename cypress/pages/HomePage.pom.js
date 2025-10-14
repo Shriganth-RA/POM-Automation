@@ -69,9 +69,27 @@ class HomePage {
       }
 
 
-      adjustPriceFilter(min_price, max_price) {
-            cy.get('.price_slider_wrapper').find('span').eq(0).invoke('attr', 'style', 'left: 0%;').trigger('change');     // Adjust the left slider button
-            cy.get('.price_slider_wrapper').find('span').eq(1).invoke('attr', 'style', 'left: 85.7143%;').trigger('change');     // Adjust the right slider button
+      adjustPriceFilter(minPrice, targetMax) {
+            //Select both slider handles
+            cy.get('.ui-slider-handle').first().as('minHandle');
+            cy.get('.ui-slider-handle').last().as('maxHandle');
+
+            cy.get('.price_slider').then($slider => {
+                  const width = $slider.width();
+
+                  const maxPrice = 500;
+
+                  // Calculate movement percentage for the right handle
+                  const percent = (targetMax - minPrice) / (maxPrice - minPrice); // e.g. (450-150)/(500-150)=0.857
+                  const targetX = width * percent;
+
+                  // Move the max handle to 75% (example)
+                  cy.get('@maxHandle')
+                        .trigger('mousedown', { which: 1 })
+                        .trigger('mousemove', { clientX: targetX }) // adjust X movement in opposite direction
+                        .trigger('mouseup', { force: true });
+
+            });
 
             // Click the Filter button
             cy.get('.price_slider_amount .button').click();
