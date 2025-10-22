@@ -30,7 +30,9 @@ class HomePage {
 
 
       verifyUrlContains(partialPath) {
-            cy.url().should('include', `/${partialPath}`); // Verify URL contains path
+
+            const urlPath = partialPath.toLowerCase().replace(/ /g, '-');
+            cy.url().should('include', `/${urlPath}`); // Verify URL contains path
       }
 
 
@@ -70,47 +72,69 @@ class HomePage {
 
 
       adjustPriceFilter(minPrice, targetMax) {
-            //Select both slider handles
-            cy.get('.ui-slider-handle').first().as('minHandle');
-            cy.get('.ui-slider-handle').last().as('maxHandle');
 
-            cy.get('.price_slider').then($slider => {
-                  const width = $slider.width();
+            // Select the left and right slider handles
+            cy.get('.price_slider .ui-slider-handle').as('handles');
 
-                  const maxPrice = 500;
-
-                  // Calculate movement percentage for the right handle
-                  const percent = (targetMax - minPrice) / (maxPrice - minPrice); // e.g. (450-150)/(500-150)=0.857
-                  const targetX = width * percent;
-
-                  // Move the max handle to 75% (example)
-                  cy.get('@maxHandle')
-                        .trigger('mousedown', { which: 1 })
-                        .trigger('mousemove', { clientX: targetX }) // adjust X movement in opposite direction
-                        .trigger('mouseup', { force: true });
-
+            // Check initial price range text
+            cy.get('.price_label').then(($price) => {
+                  cy.log('Initial price range:', $price.text());
             });
+
+            // Move the RIGHT slider handle to increase the max price
+            cy.get('@handles')
+                  .eq(1) // right handle
+                  .invoke('attr', 'style', 'right: 40%;') // simulate drag
+                  .trigger('change');
+
+            cy.wait(1000);
+
+            cy.get('.price_label').then(($price) => {
+                  cy.log('After increasing price:', $price.text());
+            });
+
+            // Move the RIGHT slider handle back to decrease the max price
+            cy.get('@handles')
+                  .eq(1)
+                  .invoke('attr', 'style', 'right: 60%;')
+                  .trigger('change');
+
+            cy.wait(1000);
+            cy.get('@handles').eq(0).realMouseDown().realMouseMove(60, 0).realMouseUp();
+            cy.get('@handles').eq(1).realMouseDown().realMouseMove(-40, 0).realMouseUp();
 
             // Click the Filter button
             cy.get('.price_slider_amount .button').click();
 
-            // Verify the slider
-            cy.get('.price_label .from').invoke('text').then((from) => {
-                  cy.wrap(from).as('expectedMinPrice');     // Wrap the minimum price
-            });
-            cy.get('.price_label .to').invoke('text').then((to) => {
-                  cy.wrap(to).as('expectedMaxPrice');
-            })
+            //cy.reload();
 
-            cy.get('@expectedMinPrice').then((expectPrice) => {
-                  // Log the Expected minimum price
-                  cy.log(`Expected min price: ${expectPrice}`);
-            });
-            cy.get('@expectedMaxPrice').then((expectPrice) => {
-                  // Log the Expected maximum price
-                  cy.log(`Expected max price: ${expectPrice}`);
-            });
+            //Click the filter button 
+            cy.get('.price_label').then(($price) => {
+                  cy.log('After decreasing price:', $price.text());
+
+
+                  // Click the Filter button
+                  cy.get('.price_slider_amount .button').click();
+
+                  // Verify the slider
+                  cy.get('.price_label .from').invoke('text').then((from) => {
+                        cy.wrap(from).as('expectedMinPrice');     // Wrap the minimum price
+                  });
+                  cy.get('.price_label .to').invoke('text').then((to) => {
+                        cy.wrap(to).as('expectedMaxPrice');
+                  })
+
+                  cy.get('@expectedMinPrice').then((expectPrice) => {
+                        // Log the Expected minimum price
+                        cy.log(`Expected min price: ${expectPrice}`);
+                  });
+                  cy.get('@expectedMaxPrice').then((expectPrice) => {
+                        // Log the Expected maximum price
+                        cy.log(`Expected max price: ${expectPrice}`);
+                  });
+            })
       }
 }
+
 
 export default new HomePage();

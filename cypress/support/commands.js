@@ -23,3 +23,20 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+import Papa from 'papaparse';
+
+Cypress.Commands.add('loadCsv', (filePath) => {
+  return cy.fixture(filePath).then((csvData) => {
+    return new Cypress.Promise((resolve) => {
+      const parsed = Papa.parse(csvData, { header: true, skipEmptyLines: true });
+      const cleanedData = parsed.data.map(row => {
+        Object.keys(row).forEach(key => {
+          row[key] = row[key]?.trim(); // trim spaces
+        });
+        return row;
+      });
+      resolve(cleanedData);
+    });
+  });
+});

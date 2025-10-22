@@ -125,12 +125,12 @@ class ProductPage {
       }
 
 
-      clickProduct(productName) {
+      clickProduct(product) {
             // Click the product link
-            cy.get('ul.products li a h3').contains(productName).click();
+            cy.get('ul.products li a h3').contains(product).click();
 
             // Check the product
-            cy.get('.summary .product_title').should('have.text', productName);
+            cy.get('.summary .product_title').should('have.text', product);
       }
 
 
@@ -138,6 +138,21 @@ class ProductPage {
             // const filter = "Sort by popularity";
 
             cy.get('select[name="orderby"]').select(filterName);
+      }
+
+
+      clickMostSaleProduct() {
+            cy.get('ul.products li.product a.woocommerce-LoopProduct-link').find('span.onsale').first().contains('Sale!').click();
+
+            // Check del tag is visible
+            cy.get('p.price').within(() => {
+                  cy.get('del').should('be.visible');
+            });
+
+            // Check ins tag is visible
+            cy.get('p.price').within(() => {
+                  cy.get('ins').should('be.visible');
+            });
       }
 
 }

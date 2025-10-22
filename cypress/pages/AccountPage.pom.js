@@ -16,6 +16,15 @@ class AccountPage {
 
 
       // Log Out Functionality
+
+
+      // Clear all Session and Storage
+      clearSessionandStorage() {
+            cy.clearCookies();
+            cy.clearLocalStorage();
+            cy.window().then((win) => win.sessionStorage.clear());
+
+      }
 }
 
 

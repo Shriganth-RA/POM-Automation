@@ -76,6 +76,31 @@ class CheckoutPage {
             cy.get('.woocommerce-thankyou-order-received').should('be.visible').and('have.text', 'Thank you. Your order has been received.');
       }
 
+
+      compareTaxPercentage(country, Indtax, Abrodtax) {
+            if (country === "IN") {
+                  cy.get('@subTotal').then((subTotal) => {
+                        cy.get('@tax').then((tax) => {
+                              const percentage = (tax / subTotal) * 100;
+                              cy.wrap(percentage).as('percentage');
+                              cy.log(`Percentage: ${percentage}`);
+
+                              cy.get('@percentage').should('eq', Indtax);
+                        })
+                  })
+            } else {
+                  cy.get('@subTotal').then((subTotal) => {
+                        cy.get('@tax').then((tax) => {
+                              const percentage = (tax / subTotal) * 100;
+                              cy.wrap(percentage).as('percentage');
+                              cy.log(`Percentage: ${percentage}`);
+
+                              cy.get('@percentage').should('eq', Abrodtax);
+                        })
+                  })
+            }
+      }
+
 }
 
 export default new CheckoutPage;

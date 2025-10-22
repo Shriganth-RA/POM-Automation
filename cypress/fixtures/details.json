@@ -35,5 +35,11 @@
 
   "password": "surya@2000",
 
-  "couponCode": "krishnasakinala"
+  "couponCode": "krishnasakinala",
+
+  "productName": "Selenium Ruby",
+
+  "taxPercentIND": 2,
+
+  "taxPercentABROD": 5
 }

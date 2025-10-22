@@ -9,7 +9,7 @@ describe('Practice automation website', () => {
 
       before(() => {
             // Load fixture before running tests
-            cy.fixture('details.json').then((fData) => {
+            cy.fixture('userDetails.csv').then((fData) => {
                   data = fData;
             });
       });
